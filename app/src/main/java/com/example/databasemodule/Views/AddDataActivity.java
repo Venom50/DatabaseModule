@@ -21,4 +21,14 @@ public class AddDataActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddUserActivity.class);
         startActivity(intent);
     }
+
+    public void addMeasurement(View view) {
+        Intent intent = new Intent(this, AddMeasurementActivity.class);
+        startActivity(intent);
+    }
+
+    public void addConfig(View view) {
+        Intent intent = new Intent(this, AddConfigActivity.class);
+        startActivity(intent);
+    }
 }

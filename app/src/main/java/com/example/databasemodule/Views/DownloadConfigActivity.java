@@ -5,11 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.example.databasemodule.AppDatabase;
-import com.example.databasemodule.Controllers.UserDao;
+import com.example.databasemodule.Controllers.ConfigDao;
 import com.example.databasemodule.Executor;
-import com.example.databasemodule.Models.User;
+import com.example.databasemodule.Models.Config;
 import com.example.databasemodule.R;
 import com.example.databasemodule.TestApplication;
 
@@ -17,33 +18,33 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class DownloadUsersActivity extends AppCompatActivity {
+public class DownloadConfigActivity extends AppCompatActivity {
 
     @Inject
     AppDatabase mAppDatabase;
-    UserDao userDao;
+    ConfigDao configDao;
 
-    public ArrayList<User> myDataset;
+    ArrayList<Config> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download_users);
+        setContentView(R.layout.activity_download_config);
 
         ((TestApplication)getApplication()).getComponent().inject(this);
-        userDao = mAppDatabase.userDao();
+        configDao = mAppDatabase.configDao();
 
-        myDataset = new ArrayList<User>();
-        getAllUsersFromDatabase();
+        myDataset = new ArrayList<>();
+        getAllConfigFromDatabase();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.configRecyclerView);
-        UserListAdapter adapter = new UserListAdapter(this, myDataset);
+        ConfigListAdapter adapter = new ConfigListAdapter(this, myDataset);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void getAllUsersFromDatabase() {
+    public void getAllConfigFromDatabase() {
         myDataset.clear();
-        Executor.IOThread(() -> myDataset.addAll(userDao.getAllUsers()));
+        Executor.IOThread(() -> myDataset.addAll(configDao.selectAllConfigs()));
     }
 }

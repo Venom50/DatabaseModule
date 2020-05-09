@@ -20,4 +20,14 @@ public class DownloadDataActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DownloadUsersActivity.class);
         startActivity(intent);
     }
+
+    public void downloadMeasurements(View view) {
+        Intent intent = new Intent(this, DownloadMeasurementsActivity.class);
+        startActivity(intent);
+    }
+
+    public void downloadConfig(View view) {
+        Intent intent = new Intent(this, DownloadConfigActivity.class);
+        startActivity(intent);
+    }
 }

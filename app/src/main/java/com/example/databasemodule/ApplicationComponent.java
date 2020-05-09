@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.databasemodule.Views.AddConfigActivity;
+import com.example.databasemodule.Views.AddMeasurementActivity;
 import com.example.databasemodule.Views.AddUserActivity;
+import com.example.databasemodule.Views.DownloadConfigActivity;
+import com.example.databasemodule.Views.DownloadMeasurementsActivity;
 import com.example.databasemodule.Views.DownloadUsersActivity;
 
 import javax.inject.Singleton;
@@ -20,6 +24,10 @@ public interface ApplicationComponent {
     void inject (TestApplication testApplication);
     void inject (AddUserActivity addUserActivity);
     void inject (DownloadUsersActivity downloadUsersActivity);
+    void inject (AddMeasurementActivity addMeasurementActivity);
+    void inject (AddConfigActivity addConfigActivity);
+    void inject (DownloadMeasurementsActivity downloadMeasurementsActivity);
+    void inject (DownloadConfigActivity downloadConfigActivity);
 
     @TestApplication.ApplicationContext
     Context getContext();

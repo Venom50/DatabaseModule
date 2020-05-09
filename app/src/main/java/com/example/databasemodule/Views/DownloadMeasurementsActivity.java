@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.icu.util.Measure;
 import android.os.Bundle;
 
 import com.example.databasemodule.AppDatabase;
-import com.example.databasemodule.Controllers.UserDao;
+import com.example.databasemodule.Controllers.MeasurementDao;
 import com.example.databasemodule.Executor;
-import com.example.databasemodule.Models.User;
+import com.example.databasemodule.Models.Measurement;
 import com.example.databasemodule.R;
 import com.example.databasemodule.TestApplication;
 
@@ -17,33 +18,33 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class DownloadUsersActivity extends AppCompatActivity {
+public class DownloadMeasurementsActivity extends AppCompatActivity {
 
     @Inject
     AppDatabase mAppDatabase;
-    UserDao userDao;
+    MeasurementDao measurementDao;
 
-    public ArrayList<User> myDataset;
+    public ArrayList<Measurement> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_download_users);
+        setContentView(R.layout.activity_download_measurements);
 
         ((TestApplication)getApplication()).getComponent().inject(this);
-        userDao = mAppDatabase.userDao();
+        measurementDao = mAppDatabase.measurementDao();
 
-        myDataset = new ArrayList<User>();
-        getAllUsersFromDatabase();
+        myDataset = new ArrayList<>();
+        getAllMeasurementsFromDatabase();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.configRecyclerView);
-        UserListAdapter adapter = new UserListAdapter(this, myDataset);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.measurementRecyclerView);
+        MeasurementListAdapter adapter = new MeasurementListAdapter(this, myDataset);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void getAllUsersFromDatabase() {
+    public void getAllMeasurementsFromDatabase() {
         myDataset.clear();
-        Executor.IOThread(() -> myDataset.addAll(userDao.getAllUsers()));
+        Executor.IOThread(() -> myDataset.addAll(measurementDao.selectAllMeasurements()));
     }
 }

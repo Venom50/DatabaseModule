@@ -29,8 +29,6 @@ public class AddUserActivity extends AppCompatActivity {
     EditText passwordEditText;
     CheckBox adminCheckBox;
 
-    public ArrayList<User> myDataset;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +36,6 @@ public class AddUserActivity extends AppCompatActivity {
 
         ((TestApplication)getApplication()).getComponent().inject(this);
         userDao = mAppDatabase.userDao();
-
-        myDataset = new ArrayList();
 
         loginEditText = (EditText) findViewById(R.id.loginEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
@@ -51,13 +47,6 @@ public class AddUserActivity extends AppCompatActivity {
         Toast.makeText(this, "Użytkownik został dodany do bazy", Toast.LENGTH_SHORT).show();
     }
 
-    public void countUsers(View view) {
-        countUsersFromDatabase();
-        for(User user : myDataset) {
-            Toast.makeText(this, user.login, Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void sendUserToDatabase() {
         User user = new User();
 
@@ -66,11 +55,5 @@ public class AddUserActivity extends AppCompatActivity {
         user.isAdmin = adminCheckBox.isChecked();
 
         Executor.IOThread(() -> userDao.insertUsers(user));
-    }
-
-    public void countUsersFromDatabase() {
-        myDataset.clear();
-
-        Executor.IOThread(() -> myDataset.addAll(userDao.getAllUsers()));
     }
 }

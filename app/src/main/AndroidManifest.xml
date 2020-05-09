@@ -3,15 +3,18 @@
     package="com.example.databasemodule">
 
     <application
-        android:name="com.example.databasemodule.TestApplication"
+        android:name=".TestApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".Views.AddConfigActivity"></activity>
-        <activity android:name=".Views.AddMesurementActivity" />
+        <activity android:name=".Views.DownloadConfigActivity"></activity>
+        <activity android:name=".Views.DownloadMeasurementsActivity" />
+        <activity android:name=".Views.AddMeasurementActivity" />
+        <activity android:name=".Views.AddConfigActivity" />
+        <activity android:name=".Views.AddMeasurementActivity" />
         <activity android:name=".Views.DownloadUsersActivity" />
         <activity android:name=".Views.AddUserActivity" />
         <activity android:name=".Views.AddDataActivity" />
