@@ -17,7 +17,7 @@ public interface MeasurementDao {
     List<Measurement> selectAllMeasurements();
 
     @Query("SELECT * FROM measurement_variables WHERE id == :id")
-    void selectMeasurement(int id);
+    Measurement selectMeasurement(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllMeasurements(Measurement... measurements);

@@ -26,6 +26,9 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract MeasurementDao measurementDao();
 
+
+    // Instance of AppDatabase using Singleton
+    /*
     public static AppDatabase getDatabase(Context context) {
         if(INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "database")
@@ -37,4 +40,5 @@ public abstract class AppDatabase extends RoomDatabase {
     public static void destroyInstance() {
         INSTANCE = null;
     }
+     */
 }

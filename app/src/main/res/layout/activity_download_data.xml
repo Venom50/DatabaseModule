@@ -6,4 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Views.DownloadDataActivity">
 
+    <Button
+        android:id="@+id/buttonDownloadUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:onClick="downloadUsers"
+        android:text="Pobierz użytkowników"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonDownloadMeasurements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Pobierz dane pomiarowe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDownloadUsers" />
+
+    <Button
+        android:id="@+id/buttonDownloadConfigs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Pobierz dane konfiguracyjne"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDownloadMeasurements" />
 </androidx.constraintlayout.widget.ConstraintLayout>

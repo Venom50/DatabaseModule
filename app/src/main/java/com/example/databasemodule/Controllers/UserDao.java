@@ -15,7 +15,7 @@ public interface UserDao {
     List<User> getAllUsers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUsers(User user);
+    void insertUsers(User... user);
 
     @Query("UPDATE users SET login = :login, password = :password, is_admin = :isAdmin WHERE id == :id")
     void updateUser(int id, String login, String password, boolean isAdmin);

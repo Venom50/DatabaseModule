@@ -16,7 +16,7 @@ public interface ConfigDao {
     List<Config> selectAllConfigs();
 
     @Query("SELECT * FROM configuration_variables WHERE id == :id")
-    void selectConfig(int id);
+    Config selectConfig(int id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllConfigs(Config... configs);
