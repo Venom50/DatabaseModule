@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 public class DownloadUsersActivity extends AppCompatActivity {
 
+    //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
     @Inject
     AppDatabase mAppDatabase;
     UserDao userDao;
@@ -30,6 +31,7 @@ public class DownloadUsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_users);
 
+        //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
         ((TestApplication)getApplication()).getComponent().inject(this);
         userDao = mAppDatabase.userDao();
 
@@ -44,6 +46,8 @@ public class DownloadUsersActivity extends AppCompatActivity {
 
     public void getAllUsersFromDatabase() {
         myDataset.clear();
+        //Użycie Dao za pomocą wątku Executor
+        //Przykład użycia w klasie Executor
         Executor.IOThread(() -> myDataset.addAll(userDao.getAllUsers()));
     }
 }

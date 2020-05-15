@@ -21,6 +21,11 @@ import dagger.Component;
         DatabaseModule.class
 })
 public interface ApplicationComponent {
+    /*
+    Dodanie wstrzykiwania zależności
+    Wymagane jest podanie konkretnej nazwy aktywności w której
+    wstrzykiwanie ma być wykorzystywane
+     */
     void inject (TestApplication testApplication);
     void inject (AddUserActivity addUserActivity);
     void inject (DownloadUsersActivity downloadUsersActivity);

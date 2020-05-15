@@ -20,6 +20,7 @@ import javax.inject.Inject;
 
 public class DownloadConfigActivity extends AppCompatActivity {
 
+    //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
     @Inject
     AppDatabase mAppDatabase;
     ConfigDao configDao;
@@ -31,6 +32,7 @@ public class DownloadConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_config);
 
+        //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
         ((TestApplication)getApplication()).getComponent().inject(this);
         configDao = mAppDatabase.configDao();
 
@@ -45,6 +47,9 @@ public class DownloadConfigActivity extends AppCompatActivity {
 
     public void getAllConfigFromDatabase() {
         myDataset.clear();
+
+        //Użycie Dao za pomocą wątku Executor
+        //Przykład użycia w klasie Executor
         Executor.IOThread(() -> myDataset.addAll(configDao.selectAllConfigs()));
     }
 }

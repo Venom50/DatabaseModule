@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 public class AddUserActivity extends AppCompatActivity {
 
+    //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
     @Inject
     AppDatabase mAppDatabase;
     UserDao userDao;
@@ -34,6 +35,7 @@ public class AddUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
 
+        //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
         ((TestApplication)getApplication()).getComponent().inject(this);
         userDao = mAppDatabase.userDao();
 
@@ -54,6 +56,8 @@ public class AddUserActivity extends AppCompatActivity {
         user.password = passwordEditText.getText().toString();
         user.isAdmin = adminCheckBox.isChecked();
 
+        //Użycie Dao za pomocą wątku Executor
+        //Przykład użycia w klasie Executor
         Executor.IOThread(() -> userDao.insertUsers(user));
     }
 }

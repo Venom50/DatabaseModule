@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 public class AddMeasurementActivity extends AppCompatActivity {
 
+    //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
     @Inject
     AppDatabase mAppDatabase;
     MeasurementDao measurementDao;
@@ -44,6 +45,7 @@ public class AddMeasurementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_measurement);
 
+        //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
         ((TestApplication)getApplication()).getComponent().inject(this);
         measurementDao = mAppDatabase.measurementDao();
 
@@ -80,7 +82,8 @@ public class AddMeasurementActivity extends AppCompatActivity {
         measurement.NODE_U = Double.parseDouble(nodeUEditText.getText().toString());
         measurement.NODE_I = Double.parseDouble(nodeIEditText.getText().toString());
 
-
+        //Użycie Dao za pomocą wątku Executor
+        //Przykład użycia w klasie Executor
         Executor.IOThread(() -> measurementDao.insertAllMeasurements(measurement));
     }
 }

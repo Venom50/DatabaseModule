@@ -52,12 +52,4 @@ public class DatabaseModule {
     @Singleton
     @Provides
     ConfigDao provideConfigDao (AppDatabase db) { return db.configDao(); }
-
-    /*
-    @Provides @Named("name")
-    String provideDatabaseName();
-
-    @Provides @Named("table_name")
-    String provideDatabaseTableName();
-    */
 }

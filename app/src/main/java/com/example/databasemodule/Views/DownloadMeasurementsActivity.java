@@ -20,6 +20,7 @@ import javax.inject.Inject;
 
 public class DownloadMeasurementsActivity extends AppCompatActivity {
 
+    //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
     @Inject
     AppDatabase mAppDatabase;
     MeasurementDao measurementDao;
@@ -31,6 +32,7 @@ public class DownloadMeasurementsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_measurements);
 
+        //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
         ((TestApplication)getApplication()).getComponent().inject(this);
         measurementDao = mAppDatabase.measurementDao();
 
@@ -45,6 +47,9 @@ public class DownloadMeasurementsActivity extends AppCompatActivity {
 
     public void getAllMeasurementsFromDatabase() {
         myDataset.clear();
+
+        //Użycie Dao za pomocą wątku Executor
+        //Przykład użycia w klasie Executor
         Executor.IOThread(() -> myDataset.addAll(measurementDao.selectAllMeasurements()));
     }
 }

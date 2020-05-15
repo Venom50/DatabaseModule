@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 public class AddConfigActivity extends AppCompatActivity {
 
+    //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
     @Inject
     AppDatabase mAppDatabase;
     ConfigDao configDao;
@@ -34,6 +35,7 @@ public class AddConfigActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_config);
 
+        //Wstrzykiwanie bazy danych oraz odpowiedniego Dao
         ((TestApplication)getApplication()).getComponent().inject(this);
         configDao = mAppDatabase.configDao();
 
@@ -58,6 +60,8 @@ public class AddConfigActivity extends AppCompatActivity {
         config.ENERGY_F = Double.parseDouble(energyFEditText.getText().toString());
         config.TIMESTAMP = timestampEditText.getText().toString();
 
+        //Użycie Dao za pomocą wątku Executor
+        //Przykład użycia w klasie Executor
         Executor.IOThread(() -> configDao.insertAllConfigs(config));
     }
 }
