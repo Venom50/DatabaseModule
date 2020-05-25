@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+    <TextView
+      android:id="@+id/delete_text_view_id"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  </ScrollView>
+
+  <Spinner
+    android:id="@+id/delete_spinner_variable_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/delete_ts_start_id"
+    android:hint="ts_start"
+    android:inputType="numberDecimal" />
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/delete_ts_stop_id"
+    android:hint="ts_stop"
+    android:inputType="numberDecimal" />
+
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+      android:id="@+id/delete_button_send"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:text="@string/send" />
+  </RelativeLayout>
+
+</LinearLayout>
