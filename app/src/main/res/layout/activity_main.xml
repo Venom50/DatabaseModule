@@ -28,4 +28,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDownloadData" />
+
+    <Button
+      android:id="@+id/buttonBluetooth"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="64dp"
+      android:onClick="openEmulatorActivity"
+      android:text="Emulator"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/buttonAddData" />
 </androidx.constraintlayout.widget.ConstraintLayout>
