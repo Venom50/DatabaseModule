@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.databasemodule.Views.AddDataActivity;
-import com.example.databasemodule.Views.DownloadDataActivity;
 import com.example.databasemodule.Views.emulator.EmulatorActivity;
+import com.example.databasemodule.Views.frontEnd.DataMenuActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void downloadData(View view) {
-        Intent intent = new Intent(this, DownloadDataActivity.class);
+        Intent intent = new Intent(this, DataMenuActivity.class);
         startActivity(intent);
     }
 

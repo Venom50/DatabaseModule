@@ -44,4 +44,16 @@
         <item>PRESS_F</item>
         <item>ENERGY_F</item>
     </string-array>
+
+    <string-array name="wielkosc_fizyczna">
+        <item>Temperatura</item>
+        <item>Wilgotność</item>
+        <item>Ciśnienie</item>
+        <item>Napięcie na baterii</item>
+        <item>Prąd pobierany z baterii</item>
+        <item>Napięcie na panelu słonecznym</item>
+        <item>Prąd pobierany z panelu słoneczego</item>
+        <item>Napięcie zasilające węzeł</item>
+        <item>Prąd pobierany z węzła</item>
+    </string-array>
 </resources>
