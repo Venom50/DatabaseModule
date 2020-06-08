@@ -29,4 +29,7 @@ public interface ConfigDao {
 
     @Query("DELETE FROM configuration_variables WHERE id == :id")
     void deleteConfig(int id);
+
+    @Query("SELECT * FROM configuration_variables ORDER BY id DESC LIMIT 1")
+    Config getNewestConfig();
 }
