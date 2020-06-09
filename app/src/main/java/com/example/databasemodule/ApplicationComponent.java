@@ -33,6 +33,7 @@ public interface ApplicationComponent {
     void inject (AddConfigActivity addConfigActivity);
     void inject (DownloadMeasurementsActivity downloadMeasurementsActivity);
     void inject (DownloadConfigActivity downloadConfigActivity);
+    void inject (MainActivity mainActivity);
 
     @TestApplication.ApplicationContext
     Context getContext();

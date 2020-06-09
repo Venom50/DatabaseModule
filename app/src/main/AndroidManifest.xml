@@ -21,6 +21,7 @@
         <activity android:name=".Views.AddUserActivity" />
         <activity android:name=".Views.AddDataActivity" />
         <activity android:name=".Views.DownloadDataActivity" />
+        <activity android:name=".MainMenu"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
