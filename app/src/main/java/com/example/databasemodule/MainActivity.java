@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(foundUsers.size()==0){
+        if(foundUsers.get(0)==null){
             Toast.makeText(this,"Wrong login or password",Toast.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(this, MainMenu.class);
