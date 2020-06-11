@@ -2,6 +2,7 @@ package com.example.databasemodule.Views.frontEnd;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -123,8 +124,12 @@ public class ChartActivity extends AppCompatActivity {
     private void setChartData(){
         lineChart.clear();
         LineDataSet lineDataSet = new LineDataSet(dataToShow, "label");
+        lineDataSet.setColor(Color.BLACK);
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setValueTextSize(12f);
         LineData lineData = new LineData(lineDataSet);
         lineChart.setData(lineData);
+        lineChart.setBackgroundColor(Color.CYAN);
         lineChart.invalidate();
     }
 }

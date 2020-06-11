@@ -26,6 +26,15 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.databasemodule.Bluetooth.common.logger.Log;
 import com.example.databasemodule.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 public class ListFragment extends Fragment {
 
     private static final String TAG = "ListFragment";
@@ -67,7 +76,7 @@ public class ListFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mTextView.setText(readMessage);
+                    mTextView.setText(deserializeResponse(readMessage));
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -272,5 +281,51 @@ public class ListFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    private void setTextView(String json){
+        String value = deserializeResponse(json);
+    }
+
+    private String deserializeResponse(String json){
+        HashMap<String, String> shortName = new HashMap<>();
+        shortName.put("ENERGY", "Dane energetyczne");
+        shortName.put("HUM", "Wilgotność");
+        shortName.put("PRESS", "Ciśnienie");
+        shortName.put("TEMP", "Temperatura");
+        shortName.put("ENERGY_F", "Częstotliwość pomiaru energii");
+        shortName.put("HUM_F", "Częstotliwość pomiaru wilgotności");
+        shortName.put("PRESS_F", "Częstotliwość pomiaru ciśnienia");
+        shortName.put("TEMP_F", "Częstotliwość pomiaru temperatury");
+        shortName.put("RO", "(tylko do odczytu)");
+        shortName.put("RW", "(do odczytu i zapisu)");
+
+        String out = "";
+        try {
+            JSONObject jsonObj = new JSONObject(json);
+            JSONArray variables = jsonObj.getJSONArray("var_list");
+
+            for(int i = 0; i < variables.length(); i++){
+                JSONObject v = variables.getJSONObject(i);
+                String name = v.getString("variable");
+                String type = v.getString("type");
+                int count = v.getInt("values");
+                long ts_first = v.getLong("ts_first");
+                long ts_last = v.getLong("ts_last");
+                Timestamp ts_s = new Timestamp(ts_first);
+                Timestamp ts_l = new Timestamp(ts_last);
+                Date date_s = ts_s;
+                Date date_l = ts_l;
+                SimpleDateFormat sd = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String string_s = sd.format(date_s);
+                String string_l = sd.format(date_l);
+                out += shortName.get(name) + " " + shortName.get(type) + "\n" + "Liczba pomiarów: " +
+                        count + "\n" + "Pierwszy pomiar: " + string_s + "\n" +
+                        "Ostatni pomiar: " + string_l + "\n\n";
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Json parsing error: " + e.getMessage());
+        }
+        return out;
     }
 }
