@@ -4,19 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "measurement_variables")
-public class Measurement {
+@Entity(tableName = "energy")
+public class Energy {
     @PrimaryKey(autoGenerate = true)
     public int id;
-
-    @ColumnInfo(name = "TEMP")
-    public double TEMP;
-
-    @ColumnInfo(name = "HUM")
-    public double HUM;
-
-    @ColumnInfo(name = "PRESS")
-    public double PRESS;
 
     @ColumnInfo(name = "BAT_V")
     public double BAT_V;
