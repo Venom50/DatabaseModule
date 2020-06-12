@@ -3,32 +3,52 @@ package com.example.databasemodule.Bluetooth.bluetoothfragment;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.system.Int64Ref;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import com.example.databasemodule.Bluetooth.common.logger.Log;
 import com.example.databasemodule.R;
+import com.example.databasemodule.Views.emulator.GetActivity;
+import com.example.databasemodule.Views.frontEnd.DateTimePicker;
+import com.example.databasemodule.Views.frontEnd.GetActivityView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import static java.lang.System.currentTimeMillis;
 
 public class GetFragment extends Fragment {
 
@@ -46,6 +66,7 @@ public class GetFragment extends Fragment {
     private ObjectMapper objectMapper;
 
     private String mConnectedDeviceName = null;
+    private DateTimePicker dateTimePicker;
 
     @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
@@ -74,7 +95,7 @@ public class GetFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mTextView.setText(readMessage);
+                    mTextView.setText(deserializeResponse(readMessage));
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -103,6 +124,7 @@ public class GetFragment extends Fragment {
         setHasOptionsMenu(true);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         objectMapper = new ObjectMapper();
+        dateTimePicker = new DateTimePicker();
 
         if (mBluetoothAdapter == null) {
             final FragmentActivity activity = getActivity();
@@ -161,6 +183,22 @@ public class GetFragment extends Fragment {
                         android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
+
+        mTsStartEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimePicker.showDateTimeDialog(mTsStartEditText, (GetActivityView)getActivity());
+            }
+        });
+        mTsStartEditText.setKeyListener(null);
+
+        mTsStopEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimePicker.showDateTimeDialog(mTsStopEditText, (GetActivityView)getActivity());
+            }
+        });
+        mTsStopEditText.setKeyListener(null);
     }
 
     private void setupChat() {
@@ -174,15 +212,14 @@ public class GetFragment extends Fragment {
             View view = getView();
             if (null != view) {
                 final String variable = mSpinner.getSelectedItem().toString();
-                final int ts_start = Integer.parseInt(mTsStartEditText.getText().toString());
-                final int ts_stop = Integer.parseInt(mTsStopEditText.getText().toString());
-
+                final long ts_start = getTimestamp(mTsStartEditText);
+                final long ts_stop  = getTimestamp(mTsStopEditText);
                 sendMessage(prepareJson(variable, ts_start, ts_stop));
             }
         });
     }
 
-    private String prepareJson(final String variable, final int ts_start, final int ts_stop) {
+    private String prepareJson(final String variable, final long ts_start, final long ts_stop) {
         final ObjectNode rootNode = objectMapper.createObjectNode();
         rootNode.put("command", "get");
 
@@ -304,5 +341,43 @@ public class GetFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    private String deserializeResponse(String Json){
+        String out = "";
+        try{
+            JSONObject jsonObj = new JSONObject(Json);
+            JSONArray variables = jsonObj.getJSONArray("values");
+
+                out += mSpinner.getSelectedItem().toString() + "\n";
+                for(int i = 0; i < variables.length(); i++){
+                    JSONObject v = variables.getJSONObject(i);
+                    long timestamp = v.getLong("ts");
+                    double value = v.getDouble("value");
+                    out += timestamp + " " + value + "\n";
+                }
+        } catch (JSONException e){
+            Log.e(TAG, "Json parsing error: " + e.getMessage());
+        }
+        return out;
+    }
+
+    private long getTimestamp(EditText textView){
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
+        Date date = new Date();
+        if(textView.getText().toString().equals("Od")){
+          return 0;
+        } else if(textView.getHint().toString().equals("Do")){
+            date.setTime(currentTimeMillis());
+            return date.getTime();
+        } else {
+            try {
+                date = simpleDateFormat.parse(textView.getText().toString());
+                return date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 }

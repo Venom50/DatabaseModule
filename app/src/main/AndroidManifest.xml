@@ -14,8 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".Views.frontEnd.ListActivityView"></activity>
-        <activity android:name=".Views.frontEnd.RaportAcitivity"></activity>
+        <activity android:name=".Views.frontEnd.GetActivityView"></activity>
+        <activity android:name=".Views.frontEnd.ListActivityView" />
+        <activity android:name=".Views.frontEnd.RaportAcitivity" />
         <activity android:name=".Views.frontEnd.ChartActivity" />
         <activity android:name=".Views.frontEnd.TableActivity" />
         <activity android:name=".Views.frontEnd.DataMenuActivity" />

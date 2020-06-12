@@ -283,11 +283,7 @@ public class ListFragment extends Fragment {
         return false;
     }
 
-    private void setTextView(String json){
-        String value = deserializeResponse(json);
-    }
-
-    private String deserializeResponse(String json){
+    private String deserializeResponse(final String json){
         HashMap<String, String> shortName = new HashMap<>();
         shortName.put("ENERGY", "Dane energetyczne");
         shortName.put("HUM", "Wilgotność");

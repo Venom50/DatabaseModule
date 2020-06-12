@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.databasemodule.R;
+import com.example.databasemodule.Views.frontEnd.GetActivityView;
 import com.example.databasemodule.Views.frontEnd.ListActivityView;
 
 public class EmulatorActivity extends AppCompatActivity {
@@ -16,7 +17,7 @@ public class EmulatorActivity extends AppCompatActivity {
     }
 
     public void openGetActivity(View view) {
-        final Intent intent = new Intent(this, GetActivity.class);
+        final Intent intent = new Intent(this, GetActivityView.class);
         startActivity(intent);
     }
 

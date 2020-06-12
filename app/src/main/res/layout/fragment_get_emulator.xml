@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:background="#0099cc">
 
   <ScrollView
     android:layout_width="match_parent"
@@ -11,7 +12,8 @@
     <TextView
       android:id="@+id/get_text_view_id"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:textSize="16sp"/>
   </ScrollView>
 
   <Spinner
@@ -22,26 +24,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/get_ts_start_id"
-    android:hint="ts_start"
+    android:hint="Od"
     android:inputType="numberDecimal" />
   <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/get_ts_stop_id"
-    android:hint="ts_stop"
+    android:hint="Do"
     android:inputType="numberDecimal" />
 
 
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <Button
-      android:id="@+id/get_button_send"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:text="@string/send" />
+        android:id="@+id/get_button_send"
+        style="@style/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="71dp"
+        android:layout_marginLeft="71dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginRight="70dp"
+        android:text="@string/send" />
   </RelativeLayout>
 
 </LinearLayout>
