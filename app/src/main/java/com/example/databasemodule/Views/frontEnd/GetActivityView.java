@@ -14,7 +14,7 @@ import com.example.databasemodule.Bluetooth.common.logger.LogWrapper;
 import com.example.databasemodule.Bluetooth.common.logger.MessageOnlyLogFilter;
 import com.example.databasemodule.R;
 
-public class GetActivityView extends SampleActivityBase {
+public class GetActivityView extends AppCompatActivity {
 
     private boolean mLogShown;
     @Override
@@ -25,7 +25,7 @@ public class GetActivityView extends SampleActivityBase {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.bluetooth_menu, menu);
         return true;
     }
 

@@ -15,7 +15,7 @@ public interface EnergyDao {
     List<Energy> selectAllEnergy();
 
     @Query("SELECT * FROM energy WHERE TIMESTAMP >= :time1 AND TIMESTAMP <= :time2")
-    Energy getEnergyBetweenTimestamps(long time1, long time2);
+    List<Energy> getEnergyBetweenTimestamps(long time1, long time2);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllEnergy(Energy... energy);

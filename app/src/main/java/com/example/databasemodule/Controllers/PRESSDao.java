@@ -15,7 +15,7 @@ public interface PRESSDao {
     List<PRESS> selectAllPresses();
 
     @Query("SELECT * FROM PRESS WHERE TIMESTAMP >= :time1 AND TIMESTAMP <= :time2")
-    PRESS getPressBetweenTimestamps(long time1, long time2);
+    List<PRESS> getPressBetweenTimestamps(long time1, long time2);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllPresses(PRESS... presses);

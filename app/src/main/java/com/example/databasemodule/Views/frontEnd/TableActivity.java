@@ -3,37 +3,37 @@ package com.example.databasemodule.Views.frontEnd;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.databasemodule.AppDatabase;
 import com.example.databasemodule.Controllers.EnergyDao;
 import com.example.databasemodule.Controllers.HUMDao;
-import com.example.databasemodule.Controllers.MeasurementDao;
 import com.example.databasemodule.Controllers.PRESSDao;
 import com.example.databasemodule.Controllers.TEMPDao;
-import com.example.databasemodule.Controllers.UserDao;
 import com.example.databasemodule.Executor;
 import com.example.databasemodule.Models.Energy;
 import com.example.databasemodule.Models.HUM;
-import com.example.databasemodule.Models.Measurement;
 import com.example.databasemodule.Models.PRESS;
 import com.example.databasemodule.Models.TEMP;
 import com.example.databasemodule.R;
 import com.example.databasemodule.TestApplication;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.inject.Inject;
+
+import static java.lang.System.currentTimeMillis;
 
 public class TableActivity extends AppCompatActivity {
 
@@ -56,6 +56,9 @@ public class TableActivity extends AppCompatActivity {
 
     Spinner spinner;
     LinearLayout listView;
+    EditText fromDate;
+    EditText toDate;
+    DateTimePicker dateTimePicker;
     public ArrayList<String> dataToShow;
     public ArrayList<Energy> energy;
     public ArrayList<HUM> hums;
@@ -82,6 +85,11 @@ public class TableActivity extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(R.id.spinner);
         listView = (LinearLayout) findViewById(R.id.listView);
+        fromDate = findViewById(R.id.fromDate);
+        fromDate.setKeyListener(null);
+        toDate = findViewById(R.id.toDate);
+        toDate.setKeyListener(null);
+        dateTimePicker = new DateTimePicker();
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -94,6 +102,24 @@ public class TableActivity extends AppCompatActivity {
 
             }
         });
+
+        fromDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimePicker.showDateTimeDialog(fromDate, TableActivity.this);
+                getDateFromeTo(getTimestamp(fromDate), getTimestamp(toDate));
+            }
+        });
+        fromDate.addTextChangedListener(getTextWatcher());
+
+        toDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimePicker.showDateTimeDialog(toDate, TableActivity.this);
+            }
+        });
+        toDate.addTextChangedListener(getTextWatcher());
+
     }
 
     private void getAllData(){
@@ -106,6 +132,18 @@ public class TableActivity extends AppCompatActivity {
         Executor.IOThread(() -> hums.addAll(humDao.selectAllHums()));
         Executor.IOThread(() -> presses.addAll(pressDao.selectAllPresses()));
         Executor.IOThread(() -> temps.addAll(tempDao.selectAllTemps()));
+    }
+
+    private void getDateFromeTo(long from, long to){
+        energy.clear();
+        hums.clear();
+        presses.clear();
+        temps.clear();
+
+        Executor.IOThread(() -> energy.addAll(energyDao.getEnergyBetweenTimestamps(from, to)));
+        Executor.IOThread(() -> hums.addAll(humDao.getHumBetweenTimestamps(from, to)));
+        Executor.IOThread(() -> presses.addAll(pressDao.getPressBetweenTimestamps(from, to)));
+        Executor.IOThread(() -> temps.addAll(tempDao.getTempBetweenTimestamps(from, to)));
     }
 
     public void setDataToShow(int index){
@@ -187,5 +225,44 @@ public class TableActivity extends AppCompatActivity {
     private String roundDouble(Double value){
         DecimalFormat df = new DecimalFormat("0.00");
         return df.format(value);
+    }
+
+    private long getTimestamp(EditText textView){
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
+        Date date = new Date();
+        if(textView.getHint().toString().equals("Od") && textView.getText().toString().isEmpty()){
+            return 0;
+        } else if(textView.getHint().toString().equals("Do") && textView.getText().toString().isEmpty()){
+            date.setTime(currentTimeMillis());
+            return date.getTime();
+        } else {
+            try {
+                date = simpleDateFormat.parse(textView.getText().toString());
+                return date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    private TextWatcher getTextWatcher(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getDateFromeTo(getTimestamp(fromDate), getTimestamp(toDate));
+                setDataToShow(spinner.getSelectedItemPosition());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
     }
 }
