@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".Views.frontEnd.GetActivityView"></activity>
+        <activity android:name=".Views.frontEnd.DeleteActivityView"></activity>
+        <activity android:name=".Views.frontEnd.SetActivityView" />
+        <activity android:name=".Views.frontEnd.GetActivityView" />
         <activity android:name=".Views.frontEnd.ListActivityView" />
         <activity android:name=".Views.frontEnd.RaportAcitivity" />
         <activity android:name=".Views.frontEnd.ChartActivity" />

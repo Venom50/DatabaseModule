@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +28,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import com.example.databasemodule.Bluetooth.common.logger.Log;
 import com.example.databasemodule.R;
+import com.example.databasemodule.Views.emulator.GetActivity;
+import com.example.databasemodule.Views.frontEnd.SetActivityView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SetFragment extends Fragment {
 
@@ -38,9 +49,18 @@ public class SetFragment extends Fragment {
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 
+    private static final Map<String, String> hashValues = new HashMap<String, String>(){
+        {
+            put("Temperatura", "TEMP_F");
+            put("Wilgotność", "HUM_F");
+            put("Ciśnienie", "PRESS_F");
+            put("Dane energetyczne", "ENERGY_F");
+        }
+    };
+
     private Button mButtonSend;
-    private TextView mTextView;
-    private Spinner mSpinner;
+    private RadioGroup mRadioGroup;
+    private RadioButton radioButton;
     private EditText mValueEditText;
     private ObjectMapper objectMapper;
 
@@ -56,7 +76,6 @@ public class SetFragment extends Fragment {
                     switch (msg.arg1) {
                         case BluetoothService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                            mTextView.setText("");
                             break;
                         case BluetoothService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -73,7 +92,7 @@ public class SetFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mTextView.setText(readMessage);
+                    showResponse(readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -150,15 +169,13 @@ public class SetFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         mButtonSend = view.findViewById(R.id.set_button_send);
-        mTextView = view.findViewById(R.id.set_text_view_id);
-        mSpinner = view.findViewById(R.id.set_spinner_variable_id);
         mValueEditText = view.findViewById(R.id.set_value_id);
-
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter
+        mRadioGroup = view.findViewById(R.id.radioGroup);
+       /* final ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(getContext(), R.array.variables_configurable,
                         android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
+        mSpinner.setAdapter(adapter);*/
     }
 
     private void setupChat() {
@@ -171,7 +188,9 @@ public class SetFragment extends Fragment {
         mButtonSend.setOnClickListener(v -> {
             View view = getView();
             if (null != view) {
-                final String variable = mSpinner.getSelectedItem().toString();
+                int radioId = mRadioGroup.getCheckedRadioButtonId();
+                radioButton = view.findViewById(radioId);
+                final String variable = hashValues.get(radioButton.getText().toString());
                 final int value = Integer.parseInt(mValueEditText.getText().toString());
 
                 sendMessage(prepareJson(variable, value));
@@ -300,5 +319,20 @@ public class SetFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    private void showResponse(String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String status = jsonObject.getString("status");
+
+            if(status.equals("OK")){
+                Toast.makeText((SetActivityView)getActivity(), "Ustawienie zmienione", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText((SetActivityView)getActivity(), "Błąd", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -107,7 +107,7 @@ public class TableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateTimePicker.showDateTimeDialog(fromDate, TableActivity.this);
-                getDateFromeTo(getTimestamp(fromDate), getTimestamp(toDate));
+                getDateFromeTo(dateTimePicker.getTimestamp(fromDate), dateTimePicker.getTimestamp(toDate));
             }
         });
         fromDate.addTextChangedListener(getTextWatcher());
@@ -151,55 +151,55 @@ public class TableActivity extends AppCompatActivity {
         switch (index){
             case TEMP:
                 for(TEMP temp : temps){
-                    dataToShow.add(roundDouble(temp.value) + "\u2103 " + timestampToString(temp.TIMESTAMP));
+                    dataToShow.add(roundDouble(temp.value) + "\u2103 " + dateTimePicker.timestampToString(temp.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case HUM:
                 for(HUM hum : hums){
-                    dataToShow.add(roundDouble(hum.value) + "% " + timestampToString(hum.TIMESTAMP));
+                    dataToShow.add(roundDouble(hum.value) + "% " + dateTimePicker.timestampToString(hum.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case PRESS:
                 for(PRESS press : presses){
-                    dataToShow.add(roundDouble(press.value) + "hPa " + timestampToString(press.TIMESTAMP));
+                    dataToShow.add(roundDouble(press.value) + "hPa " + dateTimePicker.timestampToString(press.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case BAT_V:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.BAT_V) + "V " + timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(roundDouble(energy.BAT_V) + "V " + dateTimePicker.timestampToString(energy.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case BAT_I:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.BAT_I) + "mA " + timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(roundDouble(energy.BAT_I) + "mA " + dateTimePicker.timestampToString(energy.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case SOLAR_I:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.SOLAR_I) + "mA " + timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(roundDouble(energy.SOLAR_I) + "mA " + dateTimePicker.timestampToString(energy.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case SOLAR_V:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.SOLAR_V) + "V " + timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(roundDouble(energy.SOLAR_V) + "V " + dateTimePicker.timestampToString(energy.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case NODE_V:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.NODE_U) + "V " + timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(roundDouble(energy.NODE_U) + "V " + dateTimePicker.timestampToString(energy.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
             case NODE_I:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.NODE_I) + "mA " + timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(roundDouble(energy.NODE_I) + "mA " + dateTimePicker.timestampToString(energy.TIMESTAMP));
                 }
                 setLayoutToShow();
                 break;
@@ -216,34 +216,9 @@ public class TableActivity extends AppCompatActivity {
         }
     }
 
-    private String timestampToString(Long timestamp){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-        Date date = new Date(timestamp);
-        return simpleDateFormat.format(date);
-    }
-
     private String roundDouble(Double value){
         DecimalFormat df = new DecimalFormat("0.00");
         return df.format(value);
-    }
-
-    private long getTimestamp(EditText textView){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
-        Date date = new Date();
-        if(textView.getHint().toString().equals("Od") && textView.getText().toString().isEmpty()){
-            return 0;
-        } else if(textView.getHint().toString().equals("Do") && textView.getText().toString().isEmpty()){
-            date.setTime(currentTimeMillis());
-            return date.getTime();
-        } else {
-            try {
-                date = simpleDateFormat.parse(textView.getText().toString());
-                return date.getTime();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return 0;
     }
 
     private TextWatcher getTextWatcher(){
@@ -255,7 +230,7 @@ public class TableActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                getDateFromeTo(getTimestamp(fromDate), getTimestamp(toDate));
+                getDateFromeTo(dateTimePicker.getTimestamp(fromDate), dateTimePicker.getTimestamp(toDate));
                 setDataToShow(spinner.getSelectedItemPosition());
             }
 

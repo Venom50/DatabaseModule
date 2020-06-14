@@ -2,40 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:background="#0099cc">
 
-  <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
-    <TextView
-      android:id="@+id/set_text_view_id"
+  <RadioGroup
+      android:id="@+id/radioGroup"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-  </ScrollView>
+      android:layout_height="611dp"
+      android:gravity="center">
 
-  <Spinner
-    android:id="@+id/set_spinner_variable_id"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    <RadioButton
+        android:id="@+id/TEMP_F"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Temperatura"
+        android:textSize="25sp"
+        android:checked="true"/>
+
+    <RadioButton
+        android:id="@+id/HUM_F"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Wilgotność"
+        android:textSize="25sp" />
+
+    <RadioButton
+        android:id="@+id/PRESS_F"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Ciśnienie"
+        android:textSize="25sp" />
+
+    <RadioButton
+        android:id="@+id/ENERGY_F"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Dane energetyczne"
+        android:textSize="25sp" />
+  </RadioGroup>
+
   <EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/set_value_id"
-    android:hint="value"
-    android:inputType="numberDecimal" />
+      android:id="@+id/set_value_id"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Wartość w sekundach"
+      android:inputType="numberDecimal" />
 
 
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <Button
-      android:id="@+id/set_button_send"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:text="@string/send" />
+        android:id="@+id/set_button_send"
+        style="@style/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginRight="71dp"
+        android:layout_marginBottom="16dp"
+        android:text="Ustaw" />
   </RelativeLayout>
 
 </LinearLayout>

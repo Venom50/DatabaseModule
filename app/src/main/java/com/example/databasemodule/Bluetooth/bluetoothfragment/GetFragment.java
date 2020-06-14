@@ -35,6 +35,7 @@ import com.example.databasemodule.R;
 import com.example.databasemodule.Views.emulator.GetActivity;
 import com.example.databasemodule.Views.frontEnd.DateTimePicker;
 import com.example.databasemodule.Views.frontEnd.GetActivityView;
+import com.example.databasemodule.Views.frontEnd.Units;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -64,6 +65,7 @@ public class GetFragment extends Fragment {
     private EditText mTsStartEditText;
     private EditText mTsStopEditText;
     private ObjectMapper objectMapper;
+    private StringBuilder stringBuilder = new StringBuilder();
 
     private String mConnectedDeviceName = null;
     private DateTimePicker dateTimePicker;
@@ -95,7 +97,9 @@ public class GetFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mTextView.setText(deserializeResponse(readMessage));
+                    stringBuilder.append(readMessage);
+                    if(readMessage.endsWith("}]}"))
+                    mTextView.setText(deserializeResponse(stringBuilder.toString()));
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -212,8 +216,8 @@ public class GetFragment extends Fragment {
             View view = getView();
             if (null != view) {
                 final String variable = mSpinner.getSelectedItem().toString();
-                final long ts_start = getTimestamp(mTsStartEditText);
-                final long ts_stop  = getTimestamp(mTsStopEditText);
+                final long ts_start = dateTimePicker.getTimestamp(mTsStartEditText);
+                final long ts_stop  = dateTimePicker.getTimestamp(mTsStopEditText);
                 sendMessage(prepareJson(variable, ts_start, ts_stop));
             }
         });
@@ -231,6 +235,7 @@ public class GetFragment extends Fragment {
         rootNode.set("get_params", delParams);
 
         try {
+            mTextView.setText(objectMapper.writer().writeValueAsString(rootNode));
             return objectMapper.writer().writeValueAsString(rootNode);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -345,16 +350,18 @@ public class GetFragment extends Fragment {
 
     private String deserializeResponse(String Json){
         String out = "";
+        stringBuilder.setLength(0);
         try{
             JSONObject jsonObj = new JSONObject(Json);
             JSONArray variables = jsonObj.getJSONArray("values");
 
-                out += mSpinner.getSelectedItem().toString() + "\n";
+                out += Units.nameMap.get(mSpinner.getSelectedItem().toString()) + "\n";
                 for(int i = 0; i < variables.length(); i++){
                     JSONObject v = variables.getJSONObject(i);
                     long timestamp = v.getLong("ts");
                     double value = v.getDouble("value");
-                    out += timestamp + " " + value + "\n";
+                    out += dateTimePicker.timestampToString(timestamp) + " " + value +
+                            Units.unitsMap.get(mSpinner.getSelectedItem().toString()) + "\n";
                 }
         } catch (JSONException e){
             Log.e(TAG, "Json parsing error: " + e.getMessage());

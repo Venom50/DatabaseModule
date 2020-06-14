@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:background="#0099cc">
 
   <ScrollView
     android:layout_width="match_parent"
@@ -14,34 +16,113 @@
       android:layout_height="wrap_content" />
   </ScrollView>
 
-  <Spinner
-    android:id="@+id/delete_spinner_variable_id"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+  <RadioGroup
+      android:id="@+id/deleteRadioGroup"
+      android:layout_width="match_parent"
+      android:layout_height="559dp"
+      android:gravity="center">
+    <RadioButton
+        android:id="@+id/radioTEMP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Temperatura"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"
+        android:checked="true"
+        tools:ignore="InvalidId" />
+    <RadioButton
+        android:id="@+id/radioHUM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wilgotność"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+    <RadioButton
+        android:id="@+id/radioPRESS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ciśnienie"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+    <RadioButton
+        android:id="@+id/radioENERGY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dane energetyczne"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+    <RadioButton
+        android:id="@+id/radioTEMP_F"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomiar temperatury"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+    <RadioButton
+        android:id="@+id/radioHUM_F"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomiar wilgotności"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+    <RadioButton
+        android:id="@+id/radioPRESS_F"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomiar ciśnienia"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+    <RadioButton
+        android:id="@+id/radioENERGY_F"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomiar danych energetycznych"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="25sp"/>
+
+
+  </RadioGroup>
+
   <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/delete_ts_start_id"
-    android:hint="ts_start"
+    android:hint="Od"
     android:inputType="numberDecimal" />
   <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/delete_ts_stop_id"
-    android:hint="ts_stop"
+    android:hint="Do"
     android:inputType="numberDecimal" />
 
 
   <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <Button
-      android:id="@+id/delete_button_send"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentEnd="true"
-      android:layout_alignParentRight="true"
-      android:text="@string/send" />
+        android:id="@+id/delete_button_send"
+        style="@style/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginRight="71dp"
+        android:text="Usuń dane" />
   </RelativeLayout>
 
 </LinearLayout>
