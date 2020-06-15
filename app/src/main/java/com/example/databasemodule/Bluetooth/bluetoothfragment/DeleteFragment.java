@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +28,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import com.example.databasemodule.Bluetooth.common.logger.Log;
 import com.example.databasemodule.R;
+import com.example.databasemodule.Views.emulator.DeleteActivity;
+import com.example.databasemodule.Views.frontEnd.DateTimePicker;
+import com.example.databasemodule.Views.frontEnd.DeleteActivityView;
+import com.example.databasemodule.Views.frontEnd.SetActivityView;
+import com.example.databasemodule.Views.frontEnd.Units;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DeleteFragment extends Fragment {
 
@@ -40,10 +50,13 @@ public class DeleteFragment extends Fragment {
 
     private Button mButtonSend;
     private TextView mTextView;
-    private Spinner mSpinner;
+   /* private Spinner mSpinner;*/
+    private RadioGroup mRadioGroup;
+    private RadioButton mCheckedRadioButton;
     private EditText mTsStartEditText;
     private EditText mTsStopEditText;
     private ObjectMapper objectMapper;
+    private DateTimePicker dateTimePicker;
 
     private String mConnectedDeviceName = null;
 
@@ -74,7 +87,7 @@ public class DeleteFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mTextView.setText(readMessage);
+                    showResponse(readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -152,15 +165,33 @@ public class DeleteFragment extends Fragment {
 
         mButtonSend = view.findViewById(R.id.delete_button_send);
         mTextView = view.findViewById(R.id.delete_text_view_id);
-        mSpinner = view.findViewById(R.id.delete_spinner_variable_id);
+        /*mSpinner = view.findViewById(R.id.delete_spinner_variable_id);*/
+        mRadioGroup = view.findViewById(R.id.deleteRadioGroup);
         mTsStartEditText = view.findViewById(R.id.delete_ts_start_id);
         mTsStopEditText = view.findViewById(R.id.delete_ts_stop_id);
+        dateTimePicker = new DateTimePicker();
 
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter
+        /*final ArrayAdapter<CharSequence> adapter = ArrayAdapter
                 .createFromResource(getContext(), R.array.variables,
                         android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+        /*mSpinner.setAdapter(adapter);*/
+
+        mTsStartEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimePicker.showDateTimeDialog(mTsStartEditText, (DeleteActivityView)getActivity());
+            }
+        });
+        mTsStartEditText.setKeyListener(null);
+
+        mTsStopEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateTimePicker.showDateTimeDialog(mTsStopEditText, (DeleteActivityView)getActivity());
+            }
+        });
+        mTsStopEditText.setKeyListener(null);
     }
 
     private void setupChat() {
@@ -173,16 +204,19 @@ public class DeleteFragment extends Fragment {
         mButtonSend.setOnClickListener(v -> {
             View view = getView();
             if (null != view) {
-                final String variable = mSpinner.getSelectedItem().toString();
-                final int ts_start = Integer.parseInt(mTsStartEditText.getText().toString());
-                final int ts_stop = Integer.parseInt(mTsStopEditText.getText().toString());
+                /* final String variable = mSpinner.getSelectedItem().toString();*/
+                int chceckedRadioId = mRadioGroup.getCheckedRadioButtonId();
+                mCheckedRadioButton = view.findViewById(chceckedRadioId);
+                final String variable = Units.shortcutMap.get(mCheckedRadioButton.getText().toString());
+                final long ts_start = dateTimePicker.getTimestamp(mTsStartEditText);
+                final long ts_stop = dateTimePicker.getTimestamp(mTsStopEditText);
 
                 sendMessage(prepareJson(variable, ts_start, ts_stop));
             }
         });
     }
 
-    private String prepareJson(final String variable, final int ts_start, final int ts_stop) {
+    private String prepareJson(final String variable, final long ts_start, final long ts_stop) {
         final ObjectNode rootNode = objectMapper.createObjectNode();
         rootNode.put("command", "delete");
 
@@ -304,5 +338,20 @@ public class DeleteFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    private void showResponse(String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String status = jsonObject.getString("status");
+
+            if(status.equals("OK")){
+                Toast.makeText((DeleteActivityView)getActivity(), "Dane usunięte", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText((DeleteActivityView)getActivity(), "Błąd", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

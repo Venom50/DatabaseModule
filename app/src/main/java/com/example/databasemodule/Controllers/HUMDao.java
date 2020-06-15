@@ -15,7 +15,7 @@ public interface HUMDao {
     List<HUM> selectAllHums();
 
     @Query("SELECT * FROM HUM WHERE TIMESTAMP >= :time1 AND TIMESTAMP <= :time2")
-    HUM getHumBetweenTimestamps(long time1, long time2);
+    List<HUM> getHumBetweenTimestamps(long time1, long time2);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllHums(HUM... hums);

@@ -10,6 +10,8 @@ import com.example.databasemodule.Views.AddUserActivity;
 import com.example.databasemodule.Views.DownloadConfigActivity;
 import com.example.databasemodule.Views.DownloadMeasurementsActivity;
 import com.example.databasemodule.Views.DownloadUsersActivity;
+import com.example.databasemodule.Views.frontEnd.ChartActivity;
+import com.example.databasemodule.Views.frontEnd.TableActivity;
 
 import javax.inject.Singleton;
 
@@ -33,6 +35,8 @@ public interface ApplicationComponent {
     void inject (AddConfigActivity addConfigActivity);
     void inject (DownloadMeasurementsActivity downloadMeasurementsActivity);
     void inject (DownloadConfigActivity downloadConfigActivity);
+    void inject (TableActivity tableActivity);
+    void inject (ChartActivity chartActivity);
     void inject (MainActivity mainActivity);
 
     @TestApplication.ApplicationContext

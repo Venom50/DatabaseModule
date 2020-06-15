@@ -1,6 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">DatabaseModule</string>
-    <string name="send">Send</string>
+    <string name="send">Pobierz listę</string>
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
     <string name="title_connecting">connecting...</string>
@@ -43,5 +43,17 @@
         <item>HUM_F</item>
         <item>PRESS_F</item>
         <item>ENERGY_F</item>
+    </string-array>
+
+    <string-array name="wielkosc_fizyczna">
+        <item>Temperatura</item>
+        <item>Wilgotność</item>
+        <item>Ciśnienie</item>
+        <item>Napięcie na baterii</item>
+        <item>Prąd pobierany z baterii</item>
+        <item>Napięcie na panelu słonecznym</item>
+        <item>Prąd pobierany z panelu słoneczego</item>
+        <item>Napięcie zasilające węzeł</item>
+        <item>Prąd pobierany z węzła</item>
     </string-array>
 </resources>

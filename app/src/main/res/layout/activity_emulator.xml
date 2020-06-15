@@ -3,6 +3,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+    android:background="#3CB870"
   tools:context=".Views.emulator.EmulatorActivity">
 
   <LinearLayout
@@ -11,37 +12,52 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Komunikacja z urządzeniem"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center"/>
+
     <Button
+      style="@style/buttonStyle"
       android:id="@+id/get_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
       android:onClick="openGetActivity"
-      android:text="GET" />
+      android:text="Pobierz" />
 
     <Button
+      style="@style/buttonStyle"
       android:id="@+id/set_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
       android:onClick="openSetActivity"
-      android:text="SET" />
+      android:text="Ustaw" />
 
     <Button
+      style="@style/buttonStyle"
       android:id="@+id/list_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
       android:onClick="openListActivity"
-      android:text="LIST" />
+      android:text="Lista" />
 
     <Button
+      style="@style/buttonStyle"
       android:id="@+id/delete_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="16dp"
       android:onClick="openDeleteActivity"
-      android:text="DELETE" />
+      android:text="Usuń" />
   </LinearLayout>
 
 

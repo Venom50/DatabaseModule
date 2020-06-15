@@ -15,7 +15,7 @@ public interface TEMPDao {
     List<TEMP> selectAllTemps();
 
     @Query("SELECT * FROM `TEMP` WHERE TIMESTAMP >= :time1 AND TIMESTAMP <= :time2")
-    TEMP getTempBetweenTimestamps(long time1, long time2);
+    List<TEMP> getTempBetweenTimestamps(long time1, long time2);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllTemps(TEMP... temps);
