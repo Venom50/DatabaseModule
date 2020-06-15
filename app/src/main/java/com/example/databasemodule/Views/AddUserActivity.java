@@ -14,6 +14,7 @@ import com.example.databasemodule.Executor;
 import com.example.databasemodule.Models.User;
 import com.example.databasemodule.R;
 import com.example.databasemodule.TestApplication;
+import com.example.databasemodule.Tools.RSA;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class AddUserActivity extends AppCompatActivity {
     EditText loginEditText;
     EditText passwordEditText;
     CheckBox adminCheckBox;
+    RSA rsa = new RSA();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class AddUserActivity extends AppCompatActivity {
         User user = new User();
 
         user.login = loginEditText.getText().toString();
-        user.password = passwordEditText.getText().toString();
+        user.password = rsa.encryptRSAToString(passwordEditText.getText().toString());
         user.isAdmin = adminCheckBox.isChecked();
 
         //Użycie Dao za pomocą wątku Executor

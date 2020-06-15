@@ -37,6 +37,7 @@ public interface ApplicationComponent {
     void inject (DownloadConfigActivity downloadConfigActivity);
     void inject (TableActivity tableActivity);
     void inject (ChartActivity chartActivity);
+    void inject (MainActivity mainActivity);
 
     @TestApplication.ApplicationContext
     Context getContext();

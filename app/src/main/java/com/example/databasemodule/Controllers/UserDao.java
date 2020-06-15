@@ -25,4 +25,7 @@ public interface UserDao {
 
     @Query("DELETE FROM users where id == :id")
     void deleteUser(int id);
+
+    @Query("SELECT * FROM users WHERE login=:login AND password=:password LIMIT 1")
+    User findUser(String login, String password);
 }
