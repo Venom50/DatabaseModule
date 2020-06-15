@@ -14,7 +14,10 @@ public class Units {
             put("SOLAR_V", "V");
             put("SOLAR_I", "mA");
             put("NODE_U", "V");
-            put("NODE_I", "mA");
+            put("TEMP_F", "s");
+            put("PRESS_F", "s");
+            put("HUM_F", "s");
+            put("ENERGY_F", "s");
         }
     };
 

@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".Views.frontEnd.DeleteActivityView"></activity>
+        <activity android:name=".Views.frontEnd.UserEmulatorActivity"></activity>
+        <activity android:name=".Views.frontEnd.UserActivity" />
+        <activity android:name=".Views.frontEnd.AdminActivity" />
+        <activity android:name=".Views.frontEnd.DeleteActivityView" />
         <activity android:name=".Views.frontEnd.SetActivityView" />
         <activity android:name=".Views.frontEnd.GetActivityView" />
         <activity android:name=".Views.frontEnd.ListActivityView" />

@@ -151,55 +151,55 @@ public class TableActivity extends AppCompatActivity {
         switch (index){
             case TEMP:
                 for(TEMP temp : temps){
-                    dataToShow.add(roundDouble(temp.value) + "\u2103 " + dateTimePicker.timestampToString(temp.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(temp.TIMESTAMP) + " " + roundDouble(temp.value) + "\u2103 ");
                 }
                 setLayoutToShow();
                 break;
             case HUM:
                 for(HUM hum : hums){
-                    dataToShow.add(roundDouble(hum.value) + "% " + dateTimePicker.timestampToString(hum.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(hum.TIMESTAMP) + " " + roundDouble(hum.value) + "% ");
                 }
                 setLayoutToShow();
                 break;
             case PRESS:
                 for(PRESS press : presses){
-                    dataToShow.add(roundDouble(press.value) + "hPa " + dateTimePicker.timestampToString(press.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(press.TIMESTAMP) + " " + roundDouble(press.value) + "hPa ");
                 }
                 setLayoutToShow();
                 break;
             case BAT_V:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.BAT_V) + "V " + dateTimePicker.timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(energy.TIMESTAMP) + " " + roundDouble(energy.BAT_V) + "V " );
                 }
                 setLayoutToShow();
                 break;
             case BAT_I:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.BAT_I) + "mA " + dateTimePicker.timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(energy.TIMESTAMP) + " " + roundDouble(energy.BAT_I) + "mA ");
                 }
                 setLayoutToShow();
                 break;
             case SOLAR_I:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.SOLAR_I) + "mA " + dateTimePicker.timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(energy.TIMESTAMP) + " " + roundDouble(energy.SOLAR_I) + "mA ");
                 }
                 setLayoutToShow();
                 break;
             case SOLAR_V:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.SOLAR_V) + "V " + dateTimePicker.timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(energy.TIMESTAMP) + " " + roundDouble(energy.SOLAR_V) + "V ");
                 }
                 setLayoutToShow();
                 break;
             case NODE_V:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.NODE_U) + "V " + dateTimePicker.timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(energy.TIMESTAMP) + " " + roundDouble(energy.NODE_U) + "V ");
                 }
                 setLayoutToShow();
                 break;
             case NODE_I:
                 for(Energy energy : energy){
-                    dataToShow.add(roundDouble(energy.NODE_I) + "mA " + dateTimePicker.timestampToString(energy.TIMESTAMP));
+                    dataToShow.add(dateTimePicker.timestampToString(energy.TIMESTAMP) + " " + roundDouble(energy.NODE_I) + "mA ");
                 }
                 setLayoutToShow();
                 break;
