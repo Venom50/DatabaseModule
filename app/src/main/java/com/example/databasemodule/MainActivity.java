@@ -47,30 +47,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLogin = findViewById(R.id.login);
-        mPassword = findViewById(R.id.password);
-    }
-
-    public void login(View view) {
-        //if admin start AdminActivity
-        //if user start UserActivity
-        //if wrongLoginData()
-        Intent intent = new Intent(this, AdminActivity.class);
-        startActivity(intent);
-        prefs = getSharedPreferences("com.example.databasemodule",MODE_PRIVATE);
-
-        ((TestApplication)getApplication()).getComponent().inject(this);
+        prefs = getSharedPreferences("com.example.databasemodule", MODE_PRIVATE);
+        ((TestApplication) getApplication()).getComponent().inject(this);
         userDao = mAppDatabase.userDao();
-        setContentView(R.layout.activity_main_activity);
         loginField = (EditText) findViewById(R.id.LoginField);
         passwordField = (EditText) findViewById(R.id.PasswordField);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         //Sprawdzenie czy aplikacja uruchamiana jest pierwszy raz
-        if(prefs.getBoolean("firstrun",true)){
+        if (prefs.getBoolean("firstrun", true)) {
 
             //Dodaj domyslnego użytkownika na start aplikacji
             User Admin = new User();
@@ -82,28 +70,25 @@ public class MainActivity extends AppCompatActivity {
             Admin.isAdmin = true;
 
             Executor.IOThread(() -> userDao.insertUsers(Admin));
-            prefs.edit().putBoolean("firstrun",false).commit();
+            prefs.edit().putBoolean("firstrun", false).commit();
         }
     }
-    public void login(View view){
+
+    public void login(View view) {
         String login = loginField.getText().toString();
         String password = passwordField.getText().toString();
         ArrayList<User> foundUsers = new ArrayList<>();
-        Executor.IOThread(() -> foundUsers.add(userDao.findUser(login,rsa.encryptRSAToString(password))));
+        Executor.IOThread(() -> foundUsers.add(userDao.findUser(login, rsa.encryptRSAToString(password))));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(foundUsers.get(0)==null){
-            Toast.makeText(this,"Wrong login or password",Toast.LENGTH_SHORT).show();
-        }else {
-            Intent intent = new Intent(this, MainMenu.class);
+        if (foundUsers.get(0) == null) {
+            Toast.makeText(this, "Wrong login or password", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(this, AdminActivity.class);
             startActivity(intent);
         }
-
-
-    private void wrongLoginData(){
-        Toast.makeText(this, "Błędne dane logowania", Toast.LENGTH_SHORT).show();
     }
 }
